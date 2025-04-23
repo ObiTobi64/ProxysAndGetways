@@ -1,7 +1,7 @@
 import socket
 
 def handle_request(data):
-    return f"Respuesta para: {data}".encode()
+    return f"{data} del servidor".encode()
 
 server_socket = socket.socket()
 server_socket.bind(('localhost', 8000))
