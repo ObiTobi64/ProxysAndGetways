@@ -14,7 +14,6 @@ while True:
     conn, addr = gateway_socket.accept()
 
     while True:
-        print(f'Gateway en espera...')
         data = conn.recv(1024).decode()
 
         print(f"Gateway recibió: {data}")
