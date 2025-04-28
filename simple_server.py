@@ -8,8 +8,8 @@ def handle_client(conn, addr):
     while True:
         data = conn.recv(1024)
         if not data: break
-        data = data.decode().split(' ')[1]
-        # print(data)
+        data = data.decode().split(' ')[1].strip()
+        
         if data in db:
             response = db[data].encode()
             print(f"Servidor devolvio de {addr}: {data}")

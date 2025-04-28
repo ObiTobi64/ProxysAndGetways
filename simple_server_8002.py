@@ -1,18 +1,37 @@
 import socket
+import threading
 
-def handle_request(data):
-    return f"{data} desde el servidor en puerto 8002".encode()
+db = {'69017': 'Andres', '70835': 'Ivan', '70419': 'Adrian', '64931': 'Mishel'}
+
+def handle_client(conn, addr):
+    print(f"Conectado con {addr}")
+    while True:
+        data = conn.recv(1024)
+        if not data: break
+        data = data.decode().split(' ')[1].strip()
+        
+        if data in db:
+            response = db[data].encode()
+            print(f"Servidor devolvio de {addr}: {data}")
+        else:
+            db[data] = data
+            print(f"Servidor actualizo de {addr}: {data}")
+            response = db[data].encode()
+            
+            
+        # response = f"{data} del servidor".encode()
+        conn.sendall(response)
+    
+    conn.close()
+    print(f"Conexión cerrada con {addr}")
 
 server_socket = socket.socket()
-server_socket.bind(('localhost', 8002))
+server_socket.bind(('192.168.91.98', 8002))
 server_socket.listen()
 
-print("Servidor escuchando en puerto 8002...")
+print("Servidor original escuchando en puerto 8002...")
 
 while True:
     conn, addr = server_socket.accept()
-    data = conn.recv(1024).decode()
-    print(f"Servidor 8002 recibió: {data}")
-    response = handle_request(data)
-    conn.sendall(response)
-    conn.close()
+    client_thread = threading.Thread(target=handle_client, args=(conn, addr))
+    client_thread.start()
