@@ -4,7 +4,7 @@ import time
 key = "Navi"
 
 with socket.socket() as s:
-    s.connect(('localhost', 9000)) #Se conecta al gateway
+    s.connect(('192.168.188.189', 8080)) 
     print("Conectado al gateway en el puerto 9000")
     while True:
         key = input('Ingresa la key: ')

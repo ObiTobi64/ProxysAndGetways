@@ -1,7 +1,7 @@
 import socket
 import time
 with socket.socket() as s:
-    s.connect(('localhost', 9000))
+    s.connect(('192.168.188.136', 9000))
     print("LOGS: Conectado al gateway en el puerto 9000")
     while True:
         key = input('Ingresa la ruta\n')
